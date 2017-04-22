@@ -3,3 +3,13 @@ body {
   height: 1000px;
   width:400px;
 }
+
+#child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100px;
+    width: 300px;
+    z-index: 1;
+    background-color: green;
+}
