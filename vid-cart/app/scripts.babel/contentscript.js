@@ -7,7 +7,20 @@ var huluString = "hulu";
 var netflixString = "netflix";
 var amazonString = "amazon"
 
-var addMark = '<div id="addMark" class="whatever">hello world</div> <style>.whatever{margin-top:-100px;display:inline-block;z-index:1;width:100px;height:100px;color:white;background-color:green;position:relative;}</style>';
+var addMark = '<div id="addMark" class="whatever">hello world</div>\
+<style>\
+  .whatever{\
+    z-index:999;\
+    width:1;\
+    height:100px;\
+    color:white;\
+    position:absolute;\
+    top:0;\
+    left:0;\
+    background-color:green;\
+  }\
+  </style>';
+
 
 
 
