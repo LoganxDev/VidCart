@@ -3,72 +3,81 @@
 console.log('VidCart will be dope af');
 
 var thisSite = window.location.href;
-var huluString = "hulu";
-var netflixString = "netflix";
-var amazonString = "amazon"
+var huluString = 'hulu';
+var netflixString = 'netflix';
+var amazonString = 'amazon';
 
-var addMark = '<div id="addMark" class="whatever">hello world</div>\
-<style>\
-  .whatever{\
-    z-index:999;\
-    width:1;\
-    height:100px;\
-    color:white;\
-    position:absolute;\
-    top:0;\
-    left:0;\
-    background-color:green;\
-  }\
-  </style>';
+function removeElementsByClass(className){
+    var elements = document.getElementsByClassName(className);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+}
 
 
+
+var addMark = '<div id="addMark" class="whatever">hello world</div>';
 
 
 if(thisSite.includes(huluString)) {
 
-    var addMark = '<div id="addMark" class="whatever">hello world</div> <style>.whatever{margin-top:-100px;display:inline-block;z-index:1;width:100px;height:100px;color:white;background-color:green;position:relative;}</style>';
+    var huluCss = '.whatever { z-index:999;width:40%;height:20px;color:white;position:absolute;top:0;left:0;background-color:#009688; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
 
-    function addChild() {
-        console.log("entered")
-        var div = document.getElementsByClassName('subtray')[0];
+        style.type = 'text/css';
+        if (style.styleSheet){
+          style.styleSheet.cssText = huluCss;
+        } else {
+          style.appendChild(document.createTextNode(huluCss));
+        }
 
-        // addMark.addEventListener("click", function closeSelf() {
-        //     document.body.removeChild(div[0]);
-        // }, false);
+        head.appendChild(style);
 
-        console.log(div)
-        // var firstDiv = div.innerHTML;
-        div.innerHTML += addMark;
-        // div.appendChild(addMark);
 
-        // document.body.appendChild(div);
-        // console.log(firstDiv)
+    function addChild(e) {
+        var clickedItem = e.target.classList[0];
+        if(clickedItem == 'thumbnail' && !e.target.classList.contains('added')) {
+            e.target.classList.add('added');
+            e.target.innerHTML += addMark;
+        }
+        e.stopPropagation();
+    }
+
+    function removeChild(e) {
+        var clickedItem = e.target.classList[0];
+        if(clickedItem == 'thumbnail') {
+            removeElementsByClass('whatever');
+            e.target.classList.remove('added');
+        }
     }
 
 
+
     window.onload = function() {
-        console.log("worked!")
-        var titleCards = document.getElementsByClassName("subtray");
+        console.log('worked!')
+        var titleCards = document.querySelectorAll('.thumbnail');
 
         console.log(titleCards.length)
 
 
-        for(var i = 0; i < titleCards.length; i++){
-            titleCards[i].addEventListener("mouseenter", addChild);
 
-            // for(var i = 0; i < titleCards.length; i++){
-            //     titleCards[i].addEventListener("mouseexit",function( event ){
-            //         var link = event.target.querySelector('a');
-            //         event.target.innerHTML = event.target.innerHTML.slice(addMark.length);
-            //         // var playLink = hoveredTitleCard.getElementByClassName("playLink");
-            //         // console.log(playLink);
-            //     });
-            // }
+
+        for(var i = 0; i < titleCards.length; i++){
+            titleCards[i].addEventListener('mouseenter', addChild);
         }
+
+
+        for(var j = 0; j < titleCards.length; j++){
+            titleCards[j].addEventListener('mouseleave', removeChild);
+        }
+
+    }
+
 
         // window.onscroll = function(){
         //     console.log("worked!")
-        //     var titleCards = document.getElementsByClassName("subtray");
+        //     var titleCards = document.querySelectorAll('.row');
         //
         //     console.log(titleCards.length)
         //
@@ -83,65 +92,53 @@ if(thisSite.includes(huluString)) {
         //     }
         // }
     }
-}
 
 if(thisSite.includes(amazonString)) {
 
-    function addChild() {
-        console.log("entered")
-        var div = document.getElementsByClassName('dv-shelf-item')[0];
+    var amazonCss = '.whatever { z-index:999;width:40%;height:20px;color:white;position:absolute;top:0;left:0;background-color:#009688; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
 
-        // addMark.addEventListener("click", function closeSelf() {
-        //     document.body.removeChild(div[0]);
-        // }, false);
+        style.type = 'text/css';
+        if (style.styleSheet){
+          style.styleSheet.cssText = amazonCss;
+        } else {
+          style.appendChild(document.createTextNode(amazonCss));
+        }
 
-        console.log(div)
-        // var firstDiv = div.innerHTML;
-        div.innerHTML += addMark;
-        // div.appendChild(addMark);
+        head.appendChild(style);
 
-        // document.body.appendChild(div);
-        // console.log(firstDiv)
-    }
+        function addChild(e) {
+            var clickedItem = e.target.classList[0];
+            if(clickedItem == 'dv-shelf-item' && !e.target.classList.contains('added')) {
+                e.target.classList.add('added');
+                e.target.innerHTML += addMark;
+            }
+            e.stopPropagation();
+        }
+
+        function removeChild(e) {
+            var clickedItem = e.target.classList[0];
+            if(clickedItem == 'dv-shelf-item') {
+                removeElementsByClass('whatever');
+                e.target.classList.remove('added');
+            }
+        }
 
     window.onload = function() {
-        console.log("worked!")
-        var titleCards = document.getElementsByClassName("dv-shelf-item");
+        console.log('worked!')
+        var titleCards = document.getElementsByClassName('dv-shelf-item');
 
         console.log(titleCards.length)
 
 
         for(var i = 0; i < titleCards.length; i++){
-            titleCards[i].addEventListener("mouseover", addChild);
-
-            // for(var i = 0; i < titleCards.length; i++){
-            //     titleCards[i].addEventListener("mouseexit",function( event ){
-            //         var link = event.target.querySelector('a');
-            //         event.target.innerHTML = event.target.innerHTML.slice(addMark.length);
-            //         // var playLink = hoveredTitleCard.getElementByClassName("playLink");
-            //         // console.log(playLink);
-            //     });
-            // }
+            titleCards[i].addEventListener('mouseenter', addChild);
         }
+
+        for(var j = 0; j < titleCards.length; j++){
+            titleCards[j].addEventListener('mouseleave', removeChild);
+        }
+
     }
 }
-
-// helloworld();
-//
-// window.addEventListener("scroll", getShows);
-// //
-// function getShows() {
-//     var titleCards = document.getElementsByClassName("slider-item");
-//
-//     console.log(titleCards.length)
-//
-//     for(var i = 0; i < titleCards.length; i++){
-//         console.log(titleCards[i])
-//         // titleCards[i].addEventListener("mouseover",function(){
-//         //     var titleCard = titleCards[i];
-//         //     console.log( titleCard );
-//         //     // var playLink = hoveredTitleCard.getElementByClassName("playLink");
-//         //     // console.log(playLink);
-//         // });
-//     }
-// }
