@@ -16,7 +16,7 @@ function removeElementsByClass(className){
 
 
 
-var addMark = '<div id="addMark" class="whatever">hello world</div>';
+var addMark = '<div id="addMark" class="whatever">ADD</div>';
 
 
 if(thisSite.includes(huluString)) {
@@ -95,7 +95,7 @@ if(thisSite.includes(huluString)) {
 
 if(thisSite.includes(amazonString)) {
 
-    var amazonCss = '.whatever { z-index:999;width:40%;height:20px;color:white;position:absolute;top:0;left:0;background-color:#009688; }',
+    var amazonCss = '.whatever { z-index:999;width:20%;height:20px;color:white;position:absolute;bottom:0;left:0;background-color:#009688; }',
         head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style');
 
@@ -109,8 +109,8 @@ if(thisSite.includes(amazonString)) {
         head.appendChild(style);
 
         function addChild(e) {
-            var clickedItem = e.target.classList[0];
-            if(clickedItem == 'dv-shelf-item' && !e.target.classList.contains('added')) {
+            var clickedItem = e.target.classList;
+            if(clickedItem.contains('dv-tile') && !e.target.classList.contains('added')) {
                 e.target.classList.add('added');
                 e.target.innerHTML += addMark;
             }
@@ -118,8 +118,8 @@ if(thisSite.includes(amazonString)) {
         }
 
         function removeChild(e) {
-            var clickedItem = e.target.classList[0];
-            if(clickedItem == 'dv-shelf-item') {
+            var clickedItem = e.target.classList;
+            if(clickedItem.contains('dv-tile')) {
                 removeElementsByClass('whatever');
                 e.target.classList.remove('added');
             }
@@ -127,7 +127,7 @@ if(thisSite.includes(amazonString)) {
 
     window.onload = function() {
         console.log('worked!')
-        var titleCards = document.getElementsByClassName('dv-shelf-item');
+        var titleCards = document.getElementsByClassName('dv-tile');
 
         console.log(titleCards.length)
 
