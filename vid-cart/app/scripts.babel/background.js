@@ -5,5 +5,3 @@ chrome.runtime.onInstalled.addListener(details => {
 });
 
 chrome.browserAction.setBadgeText({text: 'VC!'});
-
-console.log('VidCart! Event Page for Browser Action');

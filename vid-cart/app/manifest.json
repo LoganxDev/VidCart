@@ -11,8 +11,10 @@
   "background": {
     "scripts": [
       "scripts/chromereload.js",
-      "scripts/background.js"
-    ]
+      "scripts/background.js",
+      "scripts/eventPage.js"
+    ],
+    "persistent": true
   },
   "permissions": [
     "tabs",
@@ -33,9 +35,7 @@
     "pageCapture",
     "topSites",
     "storage",
-    "webNavigation",
-    "webRequest",
-    "webRequestBlocking"
+    "webNavigation"
   ],
   "options_ui": {
     "page": "options.html",

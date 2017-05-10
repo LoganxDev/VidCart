@@ -17,7 +17,16 @@ function removeElementsByClass(className){
 
 var addMark = '<a id="addMark" class="whatever">ADD</a>';
 
- 
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.greeting == "hello")
+      sendResponse({farewell: "goodbye"});
+  });
+
 
 if(thisSite.includes(huluString)) {
 
@@ -46,7 +55,15 @@ if(thisSite.includes(huluString)) {
             function showFoo() {
                 var please = e.target;
                 var playLink = please.querySelector('a');
-                alert(playLink);
+               chrome.storage.sync.get({links: []}, function (result) {
+                    var links = result.links;
+                    console.log(links);
+                    // chrome.storage.sync.set({'link':playLink[0].href}, function() {
+                    //     console.log('success!');
+                    // });
+                    // console.log('got link in page!')
+                    // return false;
+                });
                 return false;
             }
         }
