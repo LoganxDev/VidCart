@@ -18,14 +18,6 @@ function removeElementsByClass(className){
 var addMark = '<a id="addMark" class="whatever">ADD</a>';
 
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.greeting == "hello")
-      sendResponse({farewell: "goodbye"});
-  });
 
 
 if(thisSite.includes(huluString)) {
@@ -55,20 +47,44 @@ if(thisSite.includes(huluString)) {
             function showFoo() {
                 var please = e.target;
                 var playLink = please.querySelector('a');
-               chrome.storage.sync.get({links: []}, function (result) {
-                    var links = result.links;
-                    console.log(links);
-                    // chrome.storage.sync.set({'link':playLink[0].href}, function() {
-                    //     console.log('success!');
-                    // });
-                    // console.log('got link in page!')
-                    // return false;
+                var nameArr = playLink.href.split(".com/");
+                var showName = (nameArr[1].split("-")).join('');
+                var shows = {};
+                var currentShow = {
+                    'id':{
+                        'platform':'hulu',
+                        'name':[showName],
+                        'link':[playLink]
+                    }
+                };
+
+
+             
+
+                chrome.storage.sync.set({'shows':currentShow}, function(){
+                    console.log('set it');
                 });
+
+   //  // to initialize the all data using the storage
+                // chrome.storage.sync.get('shows', function(data) {
+                //   // check if data exists.
+                //   if (data) {
+                //     shows = data
+                //       console.log(data);
+                //   } else {
+                //       shows[Object.keys(shows).length] = currentShow;
+                //   }
+                // });
+                
                 return false;
             }
+        e.stopPropagation();   
         }
-        e.stopPropagation();
     }
+
+
+
+
 
     function removeChild(e) {
         var clickedItem = e.target.classList[0];
@@ -81,12 +97,7 @@ if(thisSite.includes(huluString)) {
 
 
     window.onload = function() {
-        console.log('worked!')
         var titleCards = document.querySelectorAll('.thumbnail');
-
-        console.log(titleCards.length)
-
-
 
 
         for(var i = 0; i < titleCards.length; i++){

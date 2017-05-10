@@ -2,8 +2,23 @@
 
 console.log('\'Allo \'Allo! Popup');
 
+var console = chrome.extension.getBackgroundPage().console;
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log(request.link) 
-  });
+
+var app = {
+
+	init: function() {
+
+		chrome.storage.sync.get('shows' ,function(show){
+			console.log(show.id.name);
+		});
+
+	}
+
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+	app.init();
+});
