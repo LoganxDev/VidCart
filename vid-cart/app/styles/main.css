@@ -13,3 +13,17 @@ body {
     z-index: 1;
     background-color: green;
 }
+
+.showDiv {
+   z-index:1000;
+   width:30%;
+   height:20px;
+   color:white;
+   margin-top: 5px;
+   background-color:#009688; 
+ } 
+
+.showDiv:hover { 
+  color:white; 
+  background-color: #71d4f4;
+}
